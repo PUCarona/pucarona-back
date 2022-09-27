@@ -1,0 +1,30 @@
+require("dotenv/config")
+const env = process.env
+const mongoose = require("mongoose")
+require("./schemas/user")
+require("./schemas/class")
+require("./schemas/task")
+
+//Controller responsável por acessar o mongodb
+
+class dbController {
+    async connectDatabase() {
+        await mongoose.connect(env.DB_CONNECTION_STRING, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        })
+        console.log("Connected to the database")
+    }
+
+    async getModel(model) {
+        if (mongoose.connection.readyState != 1) await this.connectDatabase()
+        return mongoose.model(model)
+      }
+}
+
+if (!global.dbController) {
+    console.log("dbController instanciado")
+    global.dbController = new dbController()
+  }
+  
+  module.exports = global.dbController
