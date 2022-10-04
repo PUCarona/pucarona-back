@@ -5,10 +5,6 @@ function stopLimit(arr) {
     return arr.length <= 4 && arr.length >= 1;
 }
 
-function participantLimit(arr) {
-    return arr.length <= 3 && arr.length >= 1;
-}
-
 const TripSchema = new Schema({
     start: {type: Schema.ObjectId, ref: "location", required: true},
     stops: {type: [{type: Schema.ObjectId, ref: "location"}], validate: [stopLimit, "Invalid number of stops"], require: true},
