@@ -10,6 +10,6 @@ router.post("/create", controller.create)
 
 router.post("/update/:id", controller.update)
 
-router.post("/delete/:id", controller.delete)
+router.post("/delete/:id", controller.del)
 
 module.exports = router;

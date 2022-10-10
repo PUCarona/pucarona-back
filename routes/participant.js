@@ -1,6 +1,6 @@
 const express = require("express")
 const router = express.Router()
-const controller = require("../controller/participant")
+const controller = require("../controllers/participant")
 
 //ENDPOINTS
 
@@ -10,6 +10,6 @@ router.post("/create", controller.create)
 
 router.post("/update", controller.update)
 
-router.post("/delete", controller.delete)
+router.post("/delete", controller.del)
 
 module.exports = router

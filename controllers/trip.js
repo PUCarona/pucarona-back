@@ -1,4 +1,5 @@
 const dbcontroller = require("../dbcontroller")
+const mongoose = require("mongoose")
 
 async function get(req,res) {
     try {
@@ -21,7 +22,11 @@ async function get(req,res) {
 
 async function create(req, res) {
     try {
-        const info = req.body
+        let info = req.body
+        info.start =  mongoose.Types.ObjectId(info.start)
+        info.stops = info.stops.map(e=> {
+            return mongoose.Types.ObjectId(e)
+        })
         const Trips = await dbcontroller.getModel("trip")
         const trip = await Trips.create(info)
         if (trip) {
@@ -41,9 +46,17 @@ async function create(req, res) {
 async function update(req, res) {
     try {
         const info = req.body
+        if (info.start) {
+            info.start = mongoose.Types.ObjectId(info.start)
+        }
+        if (info.stops) {
+            info.stops = info.stops.map(e=> {
+                return mongoose.Types.ObjectId(e)
+            })
+        }
         const _id = req.params.id
         const Trips = await dbcontroller.getModel("trip")
-        const trip = await Trips.updateOne({_id},info)
+        const trip = await Trips.findOneAndUpdate({_id},info, {new:true})
         if (trip) {
             res.status(200)
             res.send({message: "Sucesso!", content: trip})

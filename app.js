@@ -4,6 +4,7 @@ const app = express() // Inicialização do express
 require("dotenv/config")
 const env = process.env // Import das variáveis do ambiente(pegar infos do arquivo .env)
 const dbcontroller = require("./dbcontroller") // Import do controller do banco de dados
+const geoapi = require("./geoapi")
 const bodyParser = require("body-parser")
 
 //MIDDLEWARE

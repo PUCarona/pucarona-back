@@ -65,11 +65,12 @@ async function del(req, res) {
         const email = req.body.email // Recebe atributo email do corpo do request
         const Users = await dbcontroller.getModel("user") // Recebe modelo "user"
         const del_user = await Users.deleteOne({email}) // Deleta instância de user que tenha o mesmo email do passado
-        if (del_user.deleteCount >0) {
+        if (del_user.deletedCount >0) {
             console.log(del_user)
             res.status(200)
             res.send({message: "Sucesso!", content: del_user}) // Retorna informações da query com status de 200 caso user tenha sido deletado
         } else {
+            console.log(del_user)
             res.status(400)
             res.send({message: "Não foi possível deletar o usuário"}) // Erro
         }
