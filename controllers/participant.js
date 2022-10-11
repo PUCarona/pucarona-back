@@ -1,5 +1,6 @@
 const dbcontroller = require("../dbcontroller")
 const { get_user } = require("../utils/utils")
+const mongoose = require("mongoose");
 
 async function get(req, res) {
     try {
@@ -7,7 +8,7 @@ async function get(req, res) {
         const id = req.body.id
         const user = await get_user(email)
         const Participants = await dbcontroller.getModel("participant")
-        const participant = await Participants.findOne({user: user.id, trip: new ObjectId(id)})
+        const participant = await Participants.findOne({user: user.id, trip: mongoose.Types.ObjectId(id)})
         if (participant) {
             res.status(200)
             res.send({message: "Sucesso!", content: participant})
@@ -51,7 +52,7 @@ async function update(req, res) {
         const info = req.body.info
         const user = await get_user(email)
         const Participants = await dbcontroller.getModel("participant")
-        const participant = await Participants.updateOne({user, trip}, info)
+        const participant = await Participants.findOneAndUpdate({user, trip}, info, {new: true})
         if (participant) {
             res.status(200)
             res.send({message: "Sucesso!", content: participant})
@@ -69,10 +70,10 @@ async function update(req, res) {
 async function del(req, res) {
     try {
         const email = req.body.email
-        const trip = req.body.trip
+        const id = req.body.id
         const Participants = await dbcontroller.getModel("participant")
         const user = await get_user(email)
-        const participant = await Participants.deleteOne({user:user._id, trip})
+        const participant = await Participants.deleteOne({user:user._id, trip: id})
         if (participant.deletedCount>0) {
             res.status(200)
             res.send({message: "Sucesso!", content: participant})
