@@ -20,12 +20,15 @@ app.use(async (req, res, next) => { // Middlware responsável por verificar senh
 const UserRouter = require("./routes/user")
 const TripRouter = require("./routes/trip")
 const ParticipantRouter = require("./routes/participant")
+const RatingRouter = require("./routes/rating")
 //   USER:
 app.use("/user", UserRouter) // Define o UserRouter como responsável das rotas '/user'
 //   TRIP:
 app.use("/trip", TripRouter) // Define o TripRouter como responsável das rotas '/trip'
 //   PARTICIPANT:
 app.use("/participant", ParticipantRouter) // Define o ParticipantRouter como responsável das rotas '/participant'
+//   RATING:
+app.use("/rating", RatingRouter) // Define o RatingRouter como responsável das rotas '/rating'
 
 // START
 app.listen(port, async () => {

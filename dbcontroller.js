@@ -5,7 +5,7 @@ require("./models/user")
 require("./models/location")
 require("./models/participant")
 require("./models/trip")
-
+require("./models/rating")
 // Controller responsável por acessar o mongodb
 
 class dbController {

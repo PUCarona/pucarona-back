@@ -7,7 +7,7 @@ const UserSchema = new Schema({
     age: {type: Number, required: true},
     email: {type: String, required: true, unique: true},
     password: {type: String, required: true},
-    total_rating: {type: Number, default: 5.0},
+    total_rating: {type: Number, default: 0.0},
     num_rating: {type: Number, default: 0},
     instagram: {type: String, required: false},
     about: {type: String, default: ""},
