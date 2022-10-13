@@ -19,8 +19,8 @@ class GeoAPI {
         return new Promise((resolve, reject) => {
             console.log("Fazendo request a "+path)
       
-            this.axiosBase
-              .get(path+"&access_key="+env.API_KEY+"&limit=10&output=json") // API_KEY + parâmetros opcionais
+            this.axiosInstance
+              .get(path+"&access_key="+env.API_KEY+"&limit=4&output=json") // API_KEY + parâmetros opcionais
               .then((apiresponse) => {
                 // console.log(apiresponse.data)
                 console.log("Dados coletados") || resolve(apiresponse.data)

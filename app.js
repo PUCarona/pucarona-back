@@ -21,6 +21,7 @@ const UserRouter = require("./routes/user")
 const TripRouter = require("./routes/trip")
 const ParticipantRouter = require("./routes/participant")
 const RatingRouter = require("./routes/rating")
+const LocationRouter = require("./routes/location")
 //   USER:
 app.use("/user", UserRouter) // Define o UserRouter como responsável das rotas '/user'
 //   TRIP:
@@ -29,6 +30,8 @@ app.use("/trip", TripRouter) // Define o TripRouter como responsável das rotas 
 app.use("/participant", ParticipantRouter) // Define o ParticipantRouter como responsável das rotas '/participant'
 //   RATING:
 app.use("/rating", RatingRouter) // Define o RatingRouter como responsável das rotas '/rating'
+//   LOCATION:
+app.use("/location", LocationRouter) // Define o LocationRouter com responsável das rotas '/location/'
 
 // START
 app.listen(port, async () => {

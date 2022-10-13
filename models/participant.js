@@ -7,4 +7,6 @@ const ParticipantSchema = new Schema({
     trip: {type: Schema.ObjectId, ref: "trip", required: true}, 
 })
 
+ParticipantSchema.index({user:1, trip:1}, {unique:true})
+
 module.exports = mongoose.model("participant", ParticipantSchema)

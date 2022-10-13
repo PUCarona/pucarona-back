@@ -9,6 +9,8 @@ const RatingSchema = new Schema({
     trip: {type: Schema.ObjectId, ref: "trip", required: true}
 })
 
+RatingSchema.index({author:1, target:1, trip:1}, {unique:true})
+
 RatingSchema.pre("save", hooks.create)
 
 module.exports = mongoose.model("rating", RatingSchema)

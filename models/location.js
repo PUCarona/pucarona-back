@@ -9,4 +9,6 @@ const LocationSchema = new Schema({
     }
 })
 
+LocationSchema.index({coordinates:1}, {unique:true})
+
 module.exports = mongoose.model("location", LocationSchema)
