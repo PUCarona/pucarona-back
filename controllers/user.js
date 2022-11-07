@@ -82,9 +82,29 @@ async function del(req, res) {
 
 }
 
+async function userRating(req, re) {
+    try {
+        const email = req.body.email
+        const Users = await dbcontroller.users.getModel("user")
+        const user = await Users.findOne({email})
+        if (user) {
+            res.status(200)
+            res.send({message: "Sucesso", content: user})
+        } else {
+            res.status(400)
+            res.send({message: "Não foi possível achar o usuário"})
+        }
+    } catch(e) {
+        console.log(e)
+        res.status(404)
+        res.send({message: e})
+    }
+    }
+
 module.exports = {
     get,
     create,
     update,
     del,
+    userRating
 }

@@ -15,4 +15,6 @@ router.use("/reverse", reverseRouter)
 
 forwardRouter.get("/get", controller.get_by_name)
 
+reverseRouter.get("/get", controller.get_by_cood)
+
 module.exports = router

@@ -12,4 +12,6 @@ router.post("/update", controller.update)
 
 router.post("/delete", controller.del)
 
+router.get("/rating", controller.userRating)
+
 module.exports = router
