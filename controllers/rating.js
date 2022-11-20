@@ -4,15 +4,14 @@ const mongoose = require("mongoose");
 
 async function get(req, res) {
     try {
-        let author = req.body.author
-        let target = req.body.target
+        let {author, target, trip} = req.body
         author = await get_user(author)
         target = await get_user(target)
         author = author.id
         target = target.id
-        const trip = mongoose.Types.ObjectId(req.body.trip)
+        trip = mongoose.Types.ObjectId(trip)
         const Ratings = await dbcontroller.getModel("rating")
-        const rating = await Ratings.findOne({author, target, trip})
+        const rating = await Ratings.findOne({author, target, trip}, {runValidators: true})
         if (rating) {
             res.status(200)
             res.send({message: "Sucesso", content: rating})
@@ -29,14 +28,12 @@ async function get(req, res) {
 
 async function create(req, res) {
     try {
-        let author = req.body.author
-        let target = req.body.target
-        const rating = req.body.rating
+        let {author, target, trip, rating} = req.body
         author = await get_user(author)
         target = await get_user(target)
         author = author.id
         target = target.id
-        const trip = mongoose.Types.ObjectId(req.body.trip)
+        trip = mongoose.Types.ObjectId(trip)
         const Ratings = await dbcontroller.getModel("rating")
         const new_doc = await Ratings.create({author, target, trip, rating})
         if (new_doc) {
@@ -55,17 +52,14 @@ async function create(req, res) {
 
 async function update(req, res) {
     try {
-        let author = req.body.author
-        let target = req.body.target
+        let {author, target, trip, rating, info} = req.body
         author = await get_user(author)
         target = await get_user(target)
         author = author.id
         target = target.id
-        const rating = req.body.rating
-        const info = req.body.info
-        const trip = mongoose.Types.ObjectId(req.body.trip)
+        trip = mongoose.Types.ObjectId(trip)
         const Ratings = await dbcontroller.getModel("rating")
-        const new_doc = await Ratings.findOneAndUpdate({author, target, trip, rating},info)
+        const new_doc = await Ratings.findOneAndUpdate({author, target, trip, rating},info, {runValidators: true})
         if (new_doc) {
             res.status(200)
             res.send({message: "Sucesso", content: new_doc})
@@ -82,15 +76,14 @@ async function update(req, res) {
 
 async function del(req, res) {
     try {
-        let author = req.body.author
-        let target = req.body.target
+        let {author, target, trip} = req.body
         author = await get_user(author)
         target = await get_user(target)
         author = author.id
         target = target.id
-        const trip = mongoose.Types.ObjectId(req.body.trip)
+        trip = mongoose.Types.ObjectId(trip)
         const Ratings = await dbcontroller.getModel("rating")
-        const doc = await Ratings.deleteOne({author, target, trip})
+        const doc = await Ratings.deleteOne({author, target, trip}, {runValidators: true})
         if (doc.deletedCount >0) {
             res.status(200)
             res.send({message: "Sucesso", content: doc})

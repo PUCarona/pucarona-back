@@ -3,7 +3,7 @@ const { get_user } = require("../utils/utils")
 
 async function get(req, res) { // Controller responsável por requests /user/get
     try {
-        const email = req.body.email // Recebe atributo email do body do request
+        const { email } = req.body // Recebe atributo email do body do request
         const user = await get_user(email) // Chama a função get_user do arquivo utils.js
         if (user) {
             res.status(200)
@@ -42,10 +42,10 @@ async function create(req, res) {
 
 async function update(req, res) {
     try {
-        const email = req.query.email // Recebe o atributo email passado na URL do request
         const info = req.body // Recebe corpo do request
+        const { email } = req.body // Recebe atributo email do body do request
         const Users = await dbcontroller.getModel("user") // Recebe model "user"
-        const up_user = await Users.findOneAndUpdate({email},info, {new: true}) // Modifica instância de user que tenha o mesmo email do passado
+        const up_user = await Users.findOneAndUpdate({email},info, {new: true, runValidators: true}) // Modifica instância de user que tenha o mesmo email do passado
         if (up_user) {
             res.status(200)
             res.send({message: "Sucesso!", content: up_user}) // Retorna user modificado com status de 200
@@ -62,9 +62,9 @@ async function update(req, res) {
 
 async function del(req, res) {
     try {
-        const email = req.body.email // Recebe atributo email do corpo do request
+        const { email } = req.body // Recebe atributo email do body do request
         const Users = await dbcontroller.getModel("user") // Recebe modelo "user"
-        const del_user = await Users.deleteOne({email}) // Deleta instância de user que tenha o mesmo email do passado
+        const del_user = await Users.deleteOne({email}, {runValidators: true}) // Deleta instância de user que tenha o mesmo email do passado
         if (del_user.deletedCount >0) {
             console.log(del_user)
             res.status(200)
@@ -84,9 +84,8 @@ async function del(req, res) {
 
 async function userRating(req, re) {
     try {
-        const email = req.body.email
-        const Users = await dbcontroller.users.getModel("user")
-        const user = await Users.findOne({email})
+        const { email } = req.body // Recebe atributo email do body do request
+        const user = await get_user(email)
         if (user) {
             res.status(200)
             res.send({message: "Sucesso", content: user})

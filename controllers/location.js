@@ -1,5 +1,6 @@
 const dbcontroller = require("../dbcontroller")
 const geoapi = require("../geoapi")
+const { insert_location } = require("../utils/utils")
 
 async function get_by_name(req, res) {
     try {
@@ -21,17 +22,7 @@ async function get_by_name(req, res) {
             locations_api = locations_api.data
             locations_api = locations_api.filter(location => location.confidence >0.5)
             if (locations_api.length > 0) {
-                const create_loc = locations_api.map(location => {
-                    return {
-                        label: location.name,
-                        confidence: location.confidence,
-                        coordinates: {
-                            lagitude: location.latitude,
-                            longitude: location.longitude,
-                        },
-                    }
-                })
-                const inserted = await Locations.insertMany(create_loc)
+                const inserted = await insert_location(locations_api)
                 console.log(inserted)
                 if (inserted.length > 0) {
                     res.status(200)
@@ -67,17 +58,7 @@ async function get_by_cood(req, res) {
             locations_api = locations_api.data
             locations_api = locations_api.filter(location => location.confidence >0.5)
             if (locations_api.length > 0) {
-                const create_loc = locations_api.map(location => {
-                    return {
-                        label: location.name,
-                        confidence: location.confidence,
-                        coordinates: {
-                            lagitude: location.latitude,
-                            longitude: location.longitude,
-                        },
-                    }
-                })
-                const inserted = await Locations.insertMany(create_loc)
+                const inserted = await insert_locations(locations_api)
                 console.log(inserted)
                 if (inserted.length > 0) {
                     res.status(200)
